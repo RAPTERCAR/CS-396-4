@@ -21,8 +21,11 @@ def connect(host, port):
         print(f"Connected to {addr}")
         size = conn.recv(1024).decode('utf-8')
         matrix = generateMatrix(size)
+        matrix2 = generateMatrix(size)
         conn.send(matrix.encode('utf-8'))
+        conn.send(matrix2.encode('utf-8'))
         conn.close()
+
 
 def generateMatrix(size):
     matrix = [[0]*size for _ in range(size)]
