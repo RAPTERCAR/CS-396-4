@@ -4,7 +4,7 @@ from threading import Thread
 host = '127.0.0.1'
 multPorts = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 def main():
-    choice = int(input("What size matrices would you like to multiply"))
+    choice = int(input("What size matrices would you like to multiply: "))
     #client_socket = connect(host, genPort) #connect to the matrix generator
     #client_socket.send(choice.encode('utf-8')) 
     matrix1 = generateMatrix(choice)
