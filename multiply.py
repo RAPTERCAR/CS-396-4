@@ -19,7 +19,10 @@ def connect(host, port):
         print(f"Connected to {addr}")
 
 def multiply(a1, a2):
+    x = 0
     for i in range(len(a1)):
-        print("f")
+        x += a1[i] *a2[i]
+    return x
+
 if __name__ == "__main__":
     main()

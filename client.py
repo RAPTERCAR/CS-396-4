@@ -1,12 +1,16 @@
 import socket
+import random
+from threading import Thread
 host = '127.0.0.1'
-genPort =15000
+multPorts = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 def main():
-    choice = input("What size matrices would you like to multiply")
-    client_socket = connect(host, genPort) #connect to the matrix generator
-    client_socket.send(choice.encode('utf-8')) 
-    matrix1 = client_socket.recv(1024).decode('utf-8')
-    matrix2 = client_socket.recv(1024).decode('utf-8')
+    choice = int(input("What size matrices would you like to multiply"))
+    #client_socket = connect(host, genPort) #connect to the matrix generator
+    #client_socket.send(choice.encode('utf-8')) 
+    matrix1 = generateMatrix(choice)
+    matrix2 = generateMatrix(choice)
+    print("\n".join([" ".join(map(str, row)) for row in matrix1])) 
+    print("\n".join([" ".join(map(str, row)) for row in matrix2]))
     
     
 def connect(host, port):
@@ -19,6 +23,13 @@ def connect(host, port):
     except (ConnectionRefusedError, socket.error):
         # If connection fails, print error and try the next server
         print(f"Server {host}:{port} unavailable. Trying next server...")
+
+def generateMatrix(size):
+    matrix = [[0]*size for _ in range(size)]
+    for i in range(size):
+        for j in range(size):
+            matrix[i][j] =random.randint(0, 9)
+    return matrix
 
 if __name__ == "__main__":
     main()
