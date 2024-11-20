@@ -9,7 +9,8 @@ def main():
     #client_socket.send(choice.encode('utf-8')) 
     matrix1 = generateMatrix(choice)
     matrix2 = generateMatrix(choice)
-    print("\n".join([" ".join(map(str, row)) for row in matrix1])) 
+    print("\n".join([" ".join(map(str, row)) for row in matrix1]))
+    print("\n")
     print("\n".join([" ".join(map(str, row)) for row in matrix2]))
     
     
