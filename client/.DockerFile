@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 RUN apt update &&/ apt install python3 -y &&/ apt clean
 
-WORKDIR /CS-360-2
+WORKDIR /client
 
 COPY client.py .
 COPY multiply.py .
