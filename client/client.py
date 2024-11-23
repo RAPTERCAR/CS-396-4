@@ -1,6 +1,7 @@
 import socket
 import random
 from threading import Thread
+import pickle
 host = '127.0.0.1'
 multPorts = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 def main():
@@ -12,6 +13,9 @@ def main():
     print("\n".join([" ".join(map(str, row)) for row in matrix1]))
     print("\n")
     print("\n".join([" ".join(map(str, row)) for row in matrix2]))
+    client_socket = connect(host,multPorts[0])
+    data = pickle.dumps(matrix1[0]) #changes array to a form that can be sent over sockets
+    client_socket.send(data)
     
     
 def connect(host, port):
