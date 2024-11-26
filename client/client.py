@@ -29,6 +29,7 @@ class Tracker:
             self.r += 1
         else:
             self.c += 1
+        print(x)
         return x
     
     def place(self, prod, row, collumn):
@@ -51,7 +52,7 @@ def main():
     print(matrix1[0])
     #arr = getCollumn(matrix1,0,choice)
     #print(arr)
-    for i in range(5):
+    for i in range(1):
         server_thread = Thread(target=connect, args=(host, multPorts[i],matrix1,matrix2,track))
         threads.append(server_thread)
         server_thread.start()
@@ -74,9 +75,11 @@ def connect(host, port, m1, m2, tracker):
         print(f"Connected to server at {host}:{port}")
         #return client_socket  # Return the connected socket
         while(tracker.done == 0):
+            print("hi")
             mutex.acquire(1)
             x = tracker.increment()
-            mutex.release
+            mutex.release()
+            print("hi2")
             row = pickle.dumps(m1[x[0]])
             collumn = pickle.dumps(getCollumn(m2,x[1]))
             client_socket.send(row)
@@ -84,7 +87,7 @@ def connect(host, port, m1, m2, tracker):
             prod = int(client_socket.recv(1024).decode('utf-8'))
             mutex2.acquire(1)
             tracker.place(prod,x[0],x[1])
-            mutex2.release
+            mutex2.release()
         
         return
     except (ConnectionRefusedError, socket.error):
