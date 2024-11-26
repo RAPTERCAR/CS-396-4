@@ -22,8 +22,13 @@ def connect(host, port):
         conn, addr = server_socket.accept()
         print(f"Connected to {addr}")
         data = conn.recv(1024)
-        array = pickle.loads(data)
-        print(array)
+        data2 = conn.recv(1024)
+        row = pickle.loads(data)
+        collumn = pickle.loads(data2)
+        prod = multiply(row,collumn)
+        conn.send(prod.encode('utf-8'))
+        #print(array)
+        
 
 def multiply(a1, a2):
     x = 0

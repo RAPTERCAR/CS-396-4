@@ -23,7 +23,7 @@ class Tracker:
     def increment(self,):
         x = [self.c,self.r]
         if(self.c == self.size -1 and self.r == self.size -1):
-            self.finished = 1
+            self.done = 1
         elif(self.c == self.size - 1):
             self.c = 0
             self.r += 1
@@ -52,12 +52,14 @@ def main():
     #arr = getCollumn(matrix1,0,choice)
     #print(arr)
     for i in range(5):
-        server_thread = Thread(target=connect, args=(host, multPorts[i]))
+        server_thread = Thread(target=connect, args=(host, multPorts[i],matrix1,matrix2,track))
         threads.append(server_thread)
         server_thread.start()
 
     for thread in threads:
         thread.join()
+    
+    print("\n".join([" ".join(map(str, row)) for row in track.getArr()]))
     #client_socket = connect(host,multPorts[0])
     #data = pickle.dumps(matrix1[0]) #changes array to a form that can be sent over sockets
     #client_socket.send(data)
@@ -83,6 +85,7 @@ def connect(host, port, m1, m2, tracker):
             mutex2.acquire(1)
             tracker.place(prod,x[0],x[1])
             mutex2.release
+        
         return
     except (ConnectionRefusedError, socket.error):
         # If connection fails, print error and try the next server
