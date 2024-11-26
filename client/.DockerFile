@@ -1,6 +1,8 @@
 FROM ubuntu:latest
 
-RUN apt update &&/ apt install python3 -y &&/ apt clean
+RUN apt update \
+&& apt install python3 -y \
+&& apt clean
 
 WORKDIR /client
 
