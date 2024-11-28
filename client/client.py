@@ -79,16 +79,11 @@ def connect(host, port, m1, m2, tracker):
             mutex.acquire(1)
             x = tracker.increment()
             mutex.release()
-            print("hi2")
-            row = pickle.dumps(m1[x[0]])
-            collumn = pickle.dumps(getCollumn(m2,x[1]))
-            client_socket.send(row)
-            client_socket.send(collumn)
-            prod = int(client_socket.recv(1024).decode('utf-8'))
-            mutex2.acquire(1)
-            tracker.place(prod,x[0],x[1])
-            mutex2.release()
-        
+            hold = [m1[x[0]],getCollumn(m2,x[1]),x]
+            print(hold)
+            hold2 = pickle.dumps(hold)
+            client_socket.send(hold2)
+
         return
     except (ConnectionRefusedError, socket.error):
         # If connection fails, print error and try the next server

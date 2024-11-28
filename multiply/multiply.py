@@ -1,10 +1,11 @@
 import socket
 from threading import Thread
 import pickle
-
+Host = '127.0.0.1'
+Ports = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
+prodPort = 15012
 def main():
-    Host = '127.0.0.1'
-    Ports = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
+    
     connect(Host, Ports[0])
     #threads for testing purposes
     for i in range(1):
@@ -29,15 +30,22 @@ def connect(host, port):
             try:
                 print(f"Connected to {addr}")
                 data = conn.recv(1024)
-                data2 = conn.recv(1024)
-                row = pickle.loads(data)
-                collumn = pickle.loads(data2)
-                prod = str(multiply(row,collumn))
-                conn.send(prod.encode('utf-8'))
-                #print(array)
+                temp = pickle.loads(data)
+                cords = temp[2]
+                print(temp)
+                prod = multiply(temp[0],temp[1])
+                arr = [prod, cords[0], cords[1]]
+                sendProd(arr)
             except Exception as e:
                 print(f"Error: {e}")
                 break  # Exit if there is an error with the client connection
+
+def sendProd(arr):
+    prod_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    prod_socket.connect((Host, prodPort))
+    temp = pickle.dumps(arr)
+    prod_socket.send(temp)
+    prod_socket.close()
 
         
 
