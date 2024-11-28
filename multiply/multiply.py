@@ -60,7 +60,6 @@ def manageBuffer():
         prod = multiply(temp[0],temp[1])
         arr = [prod, cords[0], cords[1]]
         sendProd(arr)
-        buffer.remove(data)  # Remove the processed data
 
 def multiply(a1, a2):
     x = 0

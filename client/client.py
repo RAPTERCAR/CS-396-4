@@ -64,8 +64,7 @@ def main():
 
     for thread in threads:
         thread.join()
-    
-    print("\n".join([" ".join(map(str, row)) for row in track.getArr()]))
+
     #client_socket = connect(host,multPorts[0])
     #data = pickle.dumps(matrix1[0]) #changes array to a form that can be sent over sockets
     #client_socket.send(data)
@@ -80,7 +79,6 @@ def connect(host, port, m1, m2, tracker):
         print(f"Connected to server at {host}:{port}")
         #return client_socket  # Return the connected socket
         while(tracker.done == 0):
-            print("hi")
             mutex.acquire(1)
             x = tracker.increment()
             mutex.release()
