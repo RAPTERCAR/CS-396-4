@@ -1,7 +1,7 @@
 import socket
 from threading import Thread
 import pickle
-Host = '127.0.0.1'
+Host = '0.0.0.0'
 Ports = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 prodPort = 15012
 buffer = []
@@ -47,7 +47,7 @@ def connect(host, port):
 
 def sendProd(arr):
     prod_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    prod_socket.connect((Host, prodPort))
+    prod_socket.connect(("aggregator", prodPort))
     temp = pickle.dumps(arr)
     prod_socket.send(temp)
     prod_socket.close()
@@ -60,6 +60,7 @@ def manageBuffer():
         prod = multiply(temp[0],temp[1])
         arr = [prod, cords[0], cords[1]]
         sendProd(arr)
+        buffer.remove(data)  # Remove the processed data
 
 def multiply(a1, a2):
     x = 0

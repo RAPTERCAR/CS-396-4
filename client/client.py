@@ -2,9 +2,10 @@ import socket
 import random
 from threading import Thread, Lock
 import pickle
+import sys
 
 
-host = '127.0.0.1'
+host = 'multiply'
 multPorts = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 mutex = Lock()
 mutex2 = Lock()
@@ -40,7 +41,11 @@ class Tracker:
 
     
 def main():
-    choice = int(input("What size matrices would you like to multiply: "))
+    #if len(sys.argv) < 2:
+        #print("Please provide the matrix size as a command-line argument.")
+        #sys.exit(1)
+    choice = 3
+    #choice = int(input("What size matrices would you like to multiply: "))
     #client_socket = connect(host, genPort) #connect to the matrix generator
     #client_socket.send(choice.encode('utf-8')) 
     matrix1 = generateMatrix(choice)

@@ -1,0 +1,34 @@
+services:
+  client:
+    build: ./client
+    container_name: client
+    depends_on:
+      - multiply
+    environment:
+      - HOST=multiply
+    networks:
+      - matrix_network
+
+  multiply:
+    build: ./multiply
+    container_name: multiply
+    ports:
+      - "16002:15002"  # Map to a different port on the host
+      - "16003:15003"
+      - "16004:15004"
+      - "16005:15005"
+      - "16006:15006"
+    networks:
+      - matrix_network
+
+  aggregator:
+    build: ./aggregator
+    container_name: aggregator
+    ports:
+      - "16012:15012"  # Map to a different port on the host
+    networks:
+      - matrix_network
+
+networks:
+  matrix_network:
+    driver: bridge
