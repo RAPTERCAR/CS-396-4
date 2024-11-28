@@ -3,9 +3,10 @@ import random
 from threading import Thread, Lock
 import pickle
 import sys
+import time
 
 
-host = '0.0.0.0'
+host = '127.0.0.1'
 multPorts = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 mutex = Lock()
 mutex2 = Lock()
@@ -71,26 +72,28 @@ def main():
 
     
     
-def connect(host, port, m1, m2, tracker):
-    try:
-        # Attempt to create a socket and connect to the server
-        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect((host, port))
-        print(f"Connected to server at {host}:{port}")
-        #return client_socket  # Return the connected socket
-        while(tracker.done == 0):
-            mutex.acquire(1)
-            x = tracker.increment()
-            mutex.release()
-            hold = [m1[x[0]],getCollumn(m2,x[1]),x]
-            print(hold)
-            hold2 = pickle.dumps(hold)
-            client_socket.send(hold2)
 
-        return
-    except (ConnectionRefusedError, socket.error):
-        # If connection fails, print error and try the next server
-        print(f"Server {host}:{port} unavailable. Trying next server...")
+def connect(host, port, m1, m2, tracker):
+    retries = 10
+    while retries > 0:
+        try:
+            client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            client_socket.connect((host, port))
+            print(f"Connected to server at {host}:{port}")
+            while tracker.done == 0:
+                mutex.acquire()
+                x = tracker.increment()
+                mutex.release()
+                hold = [m1[x[0]], getCollumn(m2, x[1]), x]
+                hold2 = pickle.dumps(hold)
+                client_socket.send(hold2)
+            return
+        except (ConnectionRefusedError, socket.error):
+            print(f"Connection failed to {host}:{port}. Retrying...")
+            retries -= 1
+            time.sleep(5)  # Wait 5 seconds before retrying
+    print(f"Failed to connect to server at {host}:{port} after retries.")
+
 
 def generateMatrix(size):
     matrix = [[0]*size for _ in range(size)]

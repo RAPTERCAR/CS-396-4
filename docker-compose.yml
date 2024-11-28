@@ -4,10 +4,14 @@ services:
     container_name: client
     depends_on:
       - multiply
-    environment:
-      - HOST=multiply
+      - aggregator
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://multiply:15002"]
+      interval: 10s
+      retries: 5
     networks:
       - matrix_network
+
 
   multiply:
     build: ./multiply
@@ -32,3 +36,4 @@ services:
 networks:
   matrix_network:
     driver: bridge
+    name: matrix_network  # This forces Docker to use this name

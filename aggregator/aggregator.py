@@ -2,7 +2,7 @@ import socket
 from threading import Thread
 import pickle
 
-host = '0.0.0.0'
+host = '127.0.0.1'
 port = 15012
 matrixHold = []
 size = 1
