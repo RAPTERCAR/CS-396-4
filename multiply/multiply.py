@@ -4,6 +4,7 @@ import pickle
 Host = '127.0.0.1'
 Ports = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 prodPort = 15012
+buffer = []
 def main():
     
     connect(Host, Ports[0])
@@ -30,15 +31,19 @@ def connect(host, port):
             try:
                 print(f"Connected to {addr}")
                 data = conn.recv(1024)
-                temp = pickle.loads(data)
-                cords = temp[2]
-                print(temp)
-                prod = multiply(temp[0],temp[1])
-                arr = [prod, cords[0], cords[1]]
-                sendProd(arr)
+                if not data:
+                    break
+                #temp = pickle.loads(data)
+                buffer.append(data)
+                #cords = temp[2]
+                #print(temp)
+                #prod = multiply(temp[0],temp[1])
+                #arr = [prod, cords[0], cords[1]]
+                #sendProd(arr)
             except Exception as e:
                 print(f"Error: {e}")
                 break  # Exit if there is an error with the client connection
+        manageBuffer()
 
 def sendProd(arr):
     prod_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -47,7 +52,14 @@ def sendProd(arr):
     prod_socket.send(temp)
     prod_socket.close()
 
-        
+def manageBuffer():
+    for data in buffer:
+        temp = pickle.loads(data)
+        cords = temp[2]
+        print(temp)
+        prod = multiply(temp[0],temp[1])
+        arr = [prod, cords[0], cords[1]]
+        sendProd(arr)
 
 def multiply(a1, a2):
     x = 0
