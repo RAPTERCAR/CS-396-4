@@ -5,7 +5,7 @@ import pickle
 import sys
 
 
-host = 'multiply'
+host = '0.0.0.0'
 multPorts = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 mutex = Lock()
 mutex2 = Lock()
