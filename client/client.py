@@ -6,7 +6,7 @@ import sys
 import time
 
 
-host = '127.0.0.1'
+host = 'multiply'
 multPorts = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 mutex = Lock()
 mutex2 = Lock()
