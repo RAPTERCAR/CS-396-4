@@ -39,7 +39,7 @@ def connect():
 def addInfo(array):
     global size
     arr = array
-    print(arr)
+    #print(arr)
     matrixHold.append(arr)
     if (arr[1] >= size or arr[2] >= size):
         size += 1
@@ -53,7 +53,13 @@ def buildMatrix():
     for i in matrixHold:
         print(i)
         aggArray[i[1]][i[2]] = i[0]
-    print("\n".join([" ".join(map(str, row)) for row in aggArray]))
+    #print("\n".join([" ".join(map(str, row)) for row in aggArray]))
+    result = ''
+    for row in aggArray:
+        result += " ".join(map(str, row)) + "\n"
+    result.strip()
+    print(result)
+
 
 
 def eval(array):

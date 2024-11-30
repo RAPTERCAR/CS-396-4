@@ -50,7 +50,7 @@ def sendProd(arr):
     prod_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     prod_socket.connect((cHost, prodPort))
     temp = pickle.dumps(arr)
-    prod_socket.send(temp)
+    prod_socket.sendall(temp)
     prod_socket.close()
 
 def manageBuffer():

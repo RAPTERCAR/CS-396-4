@@ -31,7 +31,7 @@ class Tracker:
             self.r += 1
         else:
             self.c += 1
-        print(x)
+        #print(x)
         return x
     
     def place(self, prod, row, collumn):
@@ -85,6 +85,7 @@ def connect(host, port, m1, m2, tracker):
                 x = tracker.increment()
                 mutex.release()
                 hold = [m1[x[0]], getCollumn(m2, x[1]), x]
+                #print(hold)
                 hold2 = pickle.dumps(hold)
                 client_socket.send(hold2)
             return
