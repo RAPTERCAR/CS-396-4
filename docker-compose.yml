@@ -18,10 +18,6 @@ services:
     container_name: multiply
     ports:
       - "16002:15002"  # Map to a different port on the host
-      - "16003:15003"
-      - "16004:15004"
-      - "16005:15005"
-      - "16006:15006"
     networks:
       - matrix_network
 
