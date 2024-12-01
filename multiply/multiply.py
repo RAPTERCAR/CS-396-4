@@ -2,6 +2,8 @@ import socket
 from threading import Thread
 import pickle
 Host = '0.0.0.0'
+#Host = '127.0.0.1'
+#cHost= '127.0.0.1'
 cHost = 'aggregator'
 Ports = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 prodPort = 15012

@@ -7,6 +7,7 @@ import time
 
 
 host = 'multiply'
+#host = '127.0.0.1'
 multPorts = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 mutex = Lock()
 mutex2 = Lock()
@@ -63,8 +64,8 @@ def main():
         threads.append(server_thread)
         server_thread.start()
 
-    for thread in threads:
-        thread.join()
+    #for thread in threads:
+    #    thread.join()
 
     #client_socket = connect(host,multPorts[0])
     #data = pickle.dumps(matrix1[0]) #changes array to a form that can be sent over sockets
@@ -87,7 +88,7 @@ def connect(host, port, m1, m2, tracker):
                 hold = [m1[x[0]], getCollumn(m2, x[1]), x]
                 #print(hold)
                 hold2 = pickle.dumps(hold)
-                client_socket.send(hold2)
+                client_socket.sendall(hold2)
             return
         except (ConnectionRefusedError, socket.error):
             print(f"Connection failed to {host}:{port}. Retrying...")
