@@ -1,10 +1,10 @@
 import socket
 from threading import Thread
 import pickle
-Host = '0.0.0.0'
-#Host = '127.0.0.1'
-#cHost= '127.0.0.1'
-cHost = 'aggregator'
+#Host = '0.0.0.0'
+Host = '127.0.0.1'
+cHost= '127.0.0.1'
+#cHost = 'aggregator'
 Ports = [15002,15003,15004,15005,15006,15007,15008,15009,150010,15011]
 prodPort = 15012
 buffer = []
@@ -26,7 +26,7 @@ def main():
 def connect(host, port):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
-    server_socket.listen(5)
+    server_socket.listen(1)
     print(f"Server listening on {host}:{port}")
     while True:
         conn, addr = server_socket.accept()
