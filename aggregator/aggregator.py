@@ -3,6 +3,7 @@ from threading import Thread
 import pickle
 
 host = '0.0.0.0'
+#host = '127.0.0.1'
 port = 15012
 matrixHold = []
 size = 1
@@ -50,15 +51,19 @@ def addInfo(array):
 def buildMatrix():
     aggArray = [[0]*size for _ in range(size)]
     print(size)
+    print(matrixHold)
     for i in matrixHold:
-        print(i)
+        #print(i)
         aggArray[i[1]][i[2]] = i[0]
-    #print("\n".join([" ".join(map(str, row)) for row in aggArray]))
-    result = ''
-    for row in aggArray:
-        result += " ".join(map(str, row)) + "\n"
-    result.strip()
-    print(result)
+    print("\n".join([" ".join(map(str, row)) for row in aggArray]))
+    f = open("output.txt", "a")
+    f.write("\n".join([" ".join(map(str, row)) for row in aggArray]))
+    f.close()
+    #result = ''
+    #for row in aggArray:
+    #    result += " ".join(map(str, row)) + "\n"
+    #result.strip()
+    #print(result)
 
 
 
